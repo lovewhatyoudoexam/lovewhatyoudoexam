@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考後反省與規劃工具</title>
+    <!-- 載入 Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc;
+        }
+        .subject-input {
+            appearance: textfield;
+        }
+        .subject-input::-webkit-outer-spin-button,
+        .subject-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .reflection-card {
+            border-left: 5px solid;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 md:p-10">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-indigo-700">考後自我反省與成長規劃</h1>
+            <p class="mt-2 text-gray-600">一次考試，是一次學習的機會。讓我們誠實地檢視過程與結果。</p>
+        </header>
+
+        <!-- 成績輸入區 -->
+        <section id="score-input" class="mb-8 border-b pb-6 border-indigo-200">
+            <h2 class="text-2xl font-semibold text-indigo-600 mb-4">一、 輸入成績與預期目標 (滿分 100)</h2>
+            
+            <!-- 姓名輸入 -->
+            <div class="mb-4">
+                <label for="student-name" class="block text-lg font-medium text-gray-700 mb-2">學生姓名</label>
+                <input type="text" id="student-name" placeholder="請輸入您的姓名"
+                       class="w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500">
+            </div>
+
+            <!-- 考試類型選擇 -->
+            <div class="mb-6">
+                <label for="exam-period" class="block text-lg font-medium text-gray-700 mb-2">考試類型</label>
+                <select id="exam-period"
+                        class="w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500 bg-white">
+                    <option value="" disabled selected>請選擇考試時間/類別</option>
+                    <option value="上學期期中考">上學期期中考</option>
+                    <option value="上學期期末考">上學期期末考</option>
+                    <option value="下學期期中考">下學期期中考</option>
+                    <option value="下學期期末考">下學期期末考</option>
+                    <option value="其他">其他 (請在姓名欄備註)</option>
+                </select>
+            </div>
+
+            <!-- 成績輸入表格 -->
+            <div class="grid grid-cols-3 gap-x-4 gap-y-4 text-center items-center">
+                
+                <!-- 標題列 -->
+                <div class="font-bold text-base text-gray-800 self-end p-2">科目</div>
+                <div class="font-bold text-base text-indigo-700 self-end p-2 border-b border-indigo-300">實際成績</div>
+                <div class="font-bold text-base text-teal-700 self-end p-2 border-b border-teal-300">預計目標</div>
+
+                <!-- 國語 -->
+                <label for="chinese" class="text-left font-medium text-gray-700 p-2">國語</label>
+                <input type="number" id="chinese" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500">
+                <input type="number" id="chinese-expected" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-teal-500 focus:ring-teal-500">
+
+                <!-- 數學 -->
+                <label for="math" class="text-left font-medium text-gray-700 p-2">數學</label>
+                <input type="number" id="math" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500">
+                <input type="number" id="math-expected" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-teal-500 focus:ring-teal-500">
+
+                <!-- 自然 -->
+                <label for="science" class="text-left font-medium text-gray-700 p-2">自然</label>
+                <input type="number" id="science" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500">
+                <input type="number" id="science-expected" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-teal-500 focus:ring-teal-500">
+
+                <!-- 社會 -->
+                <label for="social" class="text-left font-medium text-gray-700 p-2">社會</label>
+                <input type="number" id="social" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500">
+                <input type="number" id="social-expected" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-teal-500 focus:ring-teal-500">
+
+                <!-- 英文 -->
+                <label for="english" class="text-left font-medium text-gray-700 p-2">英文</label>
+                <input type="number" id="english" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-indigo-500 focus:ring-indigo-500">
+                <input type="number" id="english-expected" min="0" max="100" value="0"
+                       class="subject-input w-full rounded-lg border-gray-300 shadow-sm p-3 border focus:border-teal-500 focus:ring-teal-500">
+            </div>
+        </section>
+
+        <!-- 反省選項區 -->
+        <form id="reflection-form">
+            <!-- 考前準備 (13項) -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-indigo-600 mb-4">二、 考前準備檢核 (13 項)</h2>
+                <div class="space-y-3 p-4 bg-indigo-50 rounded-xl">
+                    <p class="text-sm font-medium text-indigo-800 mb-2">請勾選您在考試前確實做到的項目：</p>
+                    <!-- Checkbox items (13項) -->
+                    <div class="flex items-start">
+                        <input id="prep-2" type="checkbox" name="preparation" value="考試前，我製作了詳細的讀書計畫並確實執行" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-2" class="ml-3 text-gray-700">1. 考試前，我製作了詳細的讀書計畫並確實執行。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-3" type="checkbox" name="preparation" value="我平時有按時完成所有作業" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-3" class="ml-3 text-gray-700">2. 我平時有按時完成所有作業。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-4" type="checkbox" name="preparation" value="平常有錯的地方我都有確實訂正" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-4" class="ml-3 text-gray-700">3. 平常有錯的地方我都有確實訂正。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-5" type="checkbox" name="preparation" value="充分理解了所有概念，而不是死記硬背" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-5" class="ml-3 text-gray-700">4. 充分理解了所有概念，而不是死記硬背。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-6" type="checkbox" name="preparation" value="我有做複習卷或評量卷" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-6" class="ml-3 text-gray-700">5. 我有做複習卷或評量卷。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-7" type="checkbox" name="preparation" value="考前我預留了充足的休息和睡眠時間" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-7" class="ml-3 text-gray-700">6. 考前我預留了充足的休息和睡眠時間。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-8" type="checkbox" name="preparation" value="將重點知識點濃縮成自己的筆記或心智圖" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-8" class="ml-3 text-gray-700">7. 我將重點知識點濃縮成自己的筆記或心智圖。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-9" type="checkbox" name="preparation" value="我有特別複習了老師提示的重點" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-9" class="ml-3 text-gray-700">8. 我有特別複習了老師提示的重點。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-10" type="checkbox" name="preparation" value="考前一天將文具物品準備妥當" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-10" class="ml-3 text-gray-700">9. 我考前一天將文具物品準備妥當。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-11" type="checkbox" name="preparation" value="針對過去的錯題與訂正筆記進行考前總複習" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-11" class="ml-3 text-gray-700">10. 我針對過去的錯題與訂正筆記進行考前總複習。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-12" type="checkbox" name="preparation" value="我每天的讀書時間都達到計畫中的時數" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-12" class="ml-3 text-gray-700">11. 我每天的讀書時間都達到計畫中的時數。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-13" type="checkbox" name="preparation" value="我排除所有會影響讀書效率的分心事物(例如手機收起來)" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-13" class="ml-3 text-gray-700">12. 我排除所有會影響讀書效率的分心事物(例如手機收起來)。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="prep-14" type="checkbox" name="preparation" value="我將複雜的知識點拆解成小塊進行學習" class="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500 mt-1">
+                        <label for="prep-14" class="ml-3 text-gray-700">13. 我將複雜的知識點拆解成小塊進行學習。</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 考試中表現 (12項) -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-indigo-600 mb-4">三、 考試當中的表現 (12 項)</h2>
+                <div class="space-y-3 p-4 bg-yellow-50 rounded-xl">
+                    <p class="text-sm font-medium text-yellow-800 mb-2">請勾選您在考試中確實做到的項目：</p>
+                    <!-- Checkbox items (12項) -->
+                    <div class="flex items-start">
+                        <input id="during-1" type="checkbox" name="during" value="仔細閱讀了所有題目和說明" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-1" class="ml-3 text-gray-700">1. 我仔細閱讀了所有題目和說明。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-2" type="checkbox" name="during" value="合理分配時間，沒有花太多時間在一道題上" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-2" class="ml-3 text-gray-700">2. 我有合理分配時間，沒有花太多時間在一道題上。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-3" type="checkbox" name="during" value="遇到難題時，能保持冷靜並先跳過" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-3" class="ml-3 text-gray-700">3. 我遇到難題時，能保持冷靜並先跳過。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-4" type="checkbox" name="during" value="檢查了答案，確認沒有計算或寫作錯誤" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-4" class="ml-3 text-gray-700">4. 我檢查了答案，確認沒有計算或寫作錯誤。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-5" type="checkbox" name="during" value="沒有因為過度緊張而忘記平常會的東西" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-5" class="ml-3 text-gray-700">5. 我沒有因為過度緊張而忘記平常會的東西。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-6" type="checkbox" name="during" value="遇到不會的題目，會用刪去法嘗試推論答案" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-6" class="ml-3 text-gray-700">6. 我遇到不會的題目，會用刪去法嘗試推論答案。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-7" type="checkbox" name="during" value="我在計算或填空時，避免了單位或標點符號的錯誤" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-7" class="ml-3 text-gray-700">7. 我在計算或填空時，避免了單位或標點符號的錯誤。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-8" type="checkbox" name="during" value="在試卷上做了記號，標註不確定的題目待會檢查" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-8" class="ml-3 text-gray-700">8. 我在試卷上做了記號，標註不確定的題目待會檢查。</label>
+                    </div>
+                    <!-- 原 12, 13, 14, 15 -->
+                    <div class="flex items-start">
+                        <input id="during-9" type="checkbox" name="during" value="我的專注力能持續到考試結束，沒有中途走神" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-9" class="ml-3 text-gray-700">9. 我的專注力能持續到考試結束，沒有中途走神。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-10" type="checkbox" name="during" value="數學或計算題有寫下完整的步驟，而非只寫答案" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-10" class="ml-3 text-gray-700">10. 我數學或計算題有寫下完整的步驟，而非只寫答案。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-11" type="checkbox" name="during" value="我充分利用了試卷上的空白處進行計算或思路規劃" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-11" class="ml-3 text-gray-700">11. 我充分利用了試卷上的空白處進行計算或思路規劃。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="during-12" type="checkbox" name="during" value="考試期間未受其他同學或環境的影響而分心" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
+                        <label for="during-12" class="ml-3 text-gray-700">12. 我考試期間未受其他同學或環境的影響而分心。</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 考後彌補措施 (9項) -->
+            <section class="mb-8">
+                <h2 class="text-2xl font-semibold text-indigo-600 mb-4">四、 考後成長規劃與行動 (9 項)</h2>
+                <div class="space-y-3 p-4 bg-green-50 rounded-xl">
+                    <p class="text-sm font-medium text-green-800 mb-2">請勾選您計劃接下來會做的行動：</p>
+                    <!-- Checkbox items (9項) -->
+                    
+                    <div class="flex items-start">
+                        <input id="after-1" type="checkbox" name="after" value="我會為這次的努力給予自己鼓勵" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-1" class="ml-3 text-gray-700">1. 我會為這次的努力給予自己鼓勵。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-2" type="checkbox" name="after" value="我會將錯題整理成筆記或貼上便利貼" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-2" class="ml-3 text-gray-700">2. 我會將錯題整理成筆記或貼上便利貼。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-3" type="checkbox" name="after" value="我會將我錯題的原因區分是概念不理解、對題意誤解、運算與步驟的錯誤、忽略細節的錯誤、答案表達不完整、時間不足" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-3" class="ml-3 text-gray-700">3. 我會將我錯題的原因區分是概念不理解、對題意誤解、運算與步驟的錯誤、忽略細節的錯誤、答案表達不完整、時間不足。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-4" type="checkbox" name="after" value="我會針對「概念不理解」的錯題，重新問老師或查資料，把它弄懂" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-4" class="ml-3 text-gray-700">4. 我會針對「概念不理解」的錯題，重新問老師或查資料，把它弄懂。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-5" type="checkbox" name="after" value="我會定期回顧錯題本，而不是只練習一次" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-5" class="ml-3 text-gray-700">5. 我會定期回顧錯題本，而不是只練習一次。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-6" type="checkbox" name="after" value="我會針對弱點科目，額外尋找相關的練習資源" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-6" class="ml-3 text-gray-700">6. 我會針對弱點科目，額外尋找相關的練習資源。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-7" type="checkbox" name="after" value="我規劃了每天固定的複習時間，防止遺忘" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-7" class="ml-3 text-gray-700">7. 我規劃了每天固定的複習時間，防止遺忘。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-8" type="checkbox" name="after" value="我會為下一次考試設定了新的、可衡量的分數目標" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-8" class="ml-3 text-gray-700">8. 我會為下一次考試設定了新的、可衡量的分數目標。</label>
+                    </div>
+                    <div class="flex items-start">
+                        <input id="after-9" type="checkbox" name="after" value="我會一併執行「考前準備」的事項" class="h-5 w-5 text-green-600 rounded border-gray-300 focus:ring-green-500 mt-1">
+                        <label for="after-9" class="ml-3 text-gray-700">9. 我會一併執行「考前準備」的事項。</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 生成反省總結按鈕 -->
+            <div class="text-center mt-8 space-y-4">
+                <button type="button" onclick="generateReflection()"
+                        class="w-full sm:w-auto px-8 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow-lg hover:bg-indigo-700 transition duration-150 ease-in-out transform hover:scale-105">
+                    🚀 生成我的反省總結與建議
+                </button>
+                <button type="button" id="download-report-btn" onclick="downloadReflectionReport()"
+                        class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white font-semibold rounded-full shadow-lg hover:bg-red-700 transition duration-150 ease-in-out transform hover:scale-105 hidden">
+                    📥 下載反省報告 (.txt)
+                </button>
+                <button type="button" onclick="saveToFirestore()"
+                        class="w-full sm:w-auto px-8 py-3 bg-green-600 text-white font-semibold rounded-full shadow-lg hover:bg-green-700 transition duration-150 ease-in-out transform hover:scale-105">
+                    💾 記錄到我的數據庫
+                </button>
+                <div id="save-status" class="text-sm mt-2 text-gray-500 font-medium">正在初始化數據庫連線...</div>
+            </div>
+        </form>
+
+        <!-- 總結報告區 -->
+        <section id="summary-section" class="mt-12 pt-8 border-t border-indigo-300 hidden">
+            <h2 class="text-3xl font-bold text-indigo-700 text-center mb-6">📝 我的反省報告</h2>
+            <div id="summary-content" class="space-y-6 text-gray-700 p-6 bg-gray-50 rounded-xl shadow-inner">
+                <!-- Summary content will be injected here -->
+            </div>
+        </section>
+        
+        <!-- 歷史記錄區 (已移除) -->
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- 全局狀態與常數 ---
+        let db;
+        let auth;
+        let userId = null;
+        
+        // 畫布環境強制使用的全局變數
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        const statusDiv = document.getElementById('save-status');
+
+        const subjects = [
+            { id: 'chinese', name: '國語' },
+            { id: 'math', name: '數學' },
+            { id: 'science', name: '自然' },
+            { id: 'social', name: '社會' },
+            { id: 'english', name: '英文' }
+        ];
+
+        const prepTotalItems = 13;
+        const duringTotalItems = 12;
+        const afterTotalItems = 9; 
+
+        // --- Firebase 初始化與登入 ---
+        async function setupFirebase() {
+            try {
+                // setLogLevel('debug'); // 開啟 Firebase 除錯日誌
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                userId = auth.currentUser?.uid || crypto.randomUUID();
+                statusDiv.innerHTML = `✅ 數據庫已連線 (User ID: ${userId.substring(0, 8)}...)`;
+                statusDiv.classList.remove('text-red-500');
+                statusDiv.classList.add('text-green-600');
+
+            } catch (error) {
+                console.error("Firebase 初始化失敗:", error);
+                statusDiv.innerHTML = '❌ 數據庫連線失敗！請檢查配置。';
+                statusDiv.classList.remove('text-green-600');
+                statusDiv.classList.add('text-red-500');
+            }
+        }
+        setupFirebase();
+
+        /**
+         * 收集所有成績和檢核數據
+         * @returns {object} 包含所有結構化數據的物件
+         */
+        function collectFormData() {
+            let totalActualScore = 0;
+            let totalExpectedScore = 0;
+            const scoresData = {};
+            const lowScores = [];
+            const unmetExpectations = [];
+            const maxScore = 100;
+
+            const studentName = document.getElementById('student-name').value.trim() || '未輸入';
+            const examPeriod = document.getElementById('exam-period').value || '未選擇';
+
+            subjects.forEach(subject => {
+                const actualInput = document.getElementById(subject.id);
+                const expectedInput = document.getElementById(subject.id + '-expected');
+                
+                let actualScore = parseInt(actualInput.value) || 0;
+                let expectedScore = parseInt(expectedInput.value) || 0;
+                
+                if (actualScore < 0 || actualScore > maxScore) actualScore = 0;
+                if (expectedScore < 0 || expectedScore > maxScore) expectedScore = 0;
+
+                totalActualScore += actualScore;
+                totalExpectedScore += expectedScore; 
+                
+                if (actualScore < 60) lowScores.push(subject.name);
+                if (actualScore < expectedScore) unmetExpectations.push(subject.name);
+
+                // 結構化分數數據
+                scoresData[subject.id] = {
+                    actual: actualScore,
+                    expected: expectedScore
+                };
+            });
+            
+            const getCheckedValues = (name) => {
+                return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+                            .map(input => input.value);
+            };
+
+            const prepChecked = getCheckedValues('preparation');
+            const duringChecked = getCheckedValues('during');
+            const afterChecked = getCheckedValues('after');
+
+            return {
+                timestamp: new Date(),
+                studentName: studentName,
+                examPeriod: examPeriod,
+                totalActualScore,
+                totalExpectedScore,
+                averageActualScore: (totalActualScore / subjects.length).toFixed(2),
+                lowScores: lowScores.join('、'),
+                unmetExpectations: unmetExpectations.join('、'),
+                scores: scoresData, // 包含所有科目實際與預計分數的物件
+                prepSummary: `${prepChecked.length}/${prepTotalItems}`,
+                duringSummary: `${duringChecked.length}/${duringTotalItems}`,
+                afterSummary: `${afterChecked.length}/${afterTotalItems}`,
+                prepCheckedList: prepChecked, // 儲存為陣列
+                duringCheckedList: duringChecked, // 儲存為陣列
+                afterCheckedList: afterChecked, // 儲存為陣列
+            };
+        }
+
+        /**
+         * 產生並顯示反省總結報告。
+         */
+        function generateReflection() {
+            const data = collectFormData();
+            
+            // 閾值計算 (Thresholds)
+            const prepExcellentThreshold = 10;
+            const prepDecentThreshold = 7;     
+            const duringExcellentThreshold = 10;
+            const duringDecentThreshold = 6;     
+            const afterExcellentThreshold = 7;
+            const afterDecentThreshold = 5;     
+
+            const prepCheckedList = data.prepCheckedList;
+            const duringCheckedList = data.duringCheckedList;
+            const afterCheckedList = data.afterCheckedList;
+
+            // 總成績區塊：顯示實際與預計分數 (已修改為包含顏色和表情符號)
+            const scoresHtml = subjects.map(subject => {
+                const actual = data.scores[subject.id].actual;
+                const expected = data.scores[subject.id].expected;
+                
+                let feedbackClass = 'text-gray-900 bg-gray-200';
+                let emoji = '';
+                
+                if (actual > expected) {
+                    feedbackClass = 'text-green-800 bg-green-200';
+                    emoji = ' 🏆'; // 獎盃
+                } else if (actual < expected) {
+                    feedbackClass = 'text-red-800 bg-red-200';
+                    emoji = ' ❗'; // 驚嘆號
+                }
+                
+                return `<span class="inline-block ${feedbackClass} font-medium px-3 py-1 rounded-full text-sm">${subject.name}：實際 ${actual}分 / 預計 ${expected}分${emoji}</span>`;
+            }).join('');
+
+
+            let summaryText = `<div class="p-4 border-l-4 border-indigo-500 bg-indigo-100 rounded-lg">
+                                <h3 class="text-xl font-bold text-indigo-800 mb-2">🎓 成績總覽：</h3>
+                                <p class="mb-2">學生姓名：<span class="font-semibold text-xl text-indigo-700">${data.studentName}</span> / 考試類型：<span class="font-semibold text-xl text-indigo-700">${data.examPeriod}</span></p>
+                                <p class="mb-2">實際總分：<span class="font-semibold text-2xl text-indigo-700">${data.totalActualScore}</span> 分 (平均 ${data.averageActualScore} 分)</p>
+                                <p class="mb-2">預計總分：<span class="font-semibold text-2xl text-teal-700">${data.totalExpectedScore}</span> 分 (平均 ${(data.totalExpectedScore / subjects.length).toFixed(2)} 分)</p>
+                                <div class="flex flex-wrap gap-2">${scoresHtml}</div>
+                                ${data.lowScores ? 
+                                `<p class="mt-4 font-bold text-red-600">🚨 待加強科目 (實際低於 60 分)：${data.lowScores}</p>` : 
+                                `<p class="mt-4 font-medium text-green-600">🎉 實際成績皆達到 60 分以上！</p>`
+                                }
+                                ${data.unmetExpectations ?
+                                `<p class="mt-2 font-bold text-orange-600">⚠️ 未達預期科目：${data.unmetExpectations}</p>` :
+                                `<p class="mt-2 font-medium text-blue-600">👍 實際成績皆達到或超越預期目標！</p>`
+                                }
+                               </div>`;
+
+            // 考前反省
+            let prepFeedback = '您的準備可能有些不足，需要更詳細的計畫。';
+            if (prepCheckedList.length >= prepExcellentThreshold) { 
+                prepFeedback = '您考前準備非常充分！這為您打下了堅實的基礎。';
+            } else if (prepCheckedList.length >= prepDecentThreshold) { 
+                prepFeedback = '您的準備相對到位，但仍有進步空間。可以檢視未勾選的項目來優化。';
+            }
+            summaryText += `<div class="mt-6">
+                                <h3 class="text-xl font-bold text-indigo-700 mb-2">💡 考前準備反思 (${data.prepSummary})：</h3>
+                                <p>${prepFeedback}</p>
+                                <ul class="list-disc list-inside mt-2 space-y-1 ml-4">
+                                    ${prepCheckedList.map(v => `<li class="text-green-700 font-medium">${v} (已做到)</li>`).join('')}
+                                    ${Array.from(document.querySelectorAll('input[name="preparation"]:not(:checked)'))
+                                            .map(input => `<li class="text-red-700">${input.value} (待加強)</li>`).join('')}
+                                </ul>
+                            </div>`;
+
+            // 考試中表現
+            let duringFeedback = '您可能需要練習穩定情緒或分配時間的技巧。';
+            if (duringCheckedList.length >= duringExcellentThreshold) {
+                duringFeedback = '您在考場上表現穩定而專注！能將實力完整發揮。';
+            } else if (duringCheckedList.length >= duringDecentThreshold) {
+                duringFeedback = '您的臨場表現不錯，但要注意細節，如檢查或分配時間。';
+            }
+            summaryText += `<div class="mt-6">
+                                <h3 class="text-xl font-bold text-indigo-700 mb-2">⏱️ 考試臨場表現 (${data.duringSummary})：</h3>
+                                <p>${duringFeedback}</p>
+                                <ul class="list-disc list-inside mt-2 space-y-1 ml-4">
+                                    ${duringCheckedList.map(v => `<li class="text-green-700 font-medium">${v} (已做到)</li>`).join('')}
+                                    ${Array.from(document.querySelectorAll('input[name="during"]:not(:checked)'))
+                                            .map(input => `<li class="text-red-700">${input.value} (待加強)</li>`).join('')}
+                                </ul>
+                            </div>`;
+
+            // 考後彌補措施
+            let afterFeedback = '請立即規劃並開始執行這些訂正和調整的行動，這是進步的關鍵！';
+            if (afterCheckedList.length >= afterExcellentThreshold) {
+                afterFeedback = '太棒了！您已經擁有完整的成長藍圖，堅持下去必有收穫。';
+            } else if (afterCheckedList.length >= afterDecentThreshold) {
+                afterFeedback = '您的後續行動已經啟動，記得堅持執行，並讓這些行動成為習慣。';
+            }
+            summaryText += `<div class="mt-6">
+                                <h3 class="text-xl font-bold text-indigo-700 mb-2">🎯 考後成長規劃 (${data.afterSummary})：</h3>
+                                <p>${afterFeedback}</p>
+                                <ul class="list-disc list-inside mt-2 space-y-1 ml-4">
+                                    ${afterCheckedList.map(v => `<li class="text-green-700 font-medium">${v} (將執行)</li>`).join('')}
+                                </ul>
+                            </div>`;
+            
+            // 總結建議
+            const recommendation = data.lowScores || data.unmetExpectations
+                ? `建議您優先針對 <span class="text-red-600 font-bold">${data.lowScores.replace(/ \(.+\)/g, '').split('、').filter(n=>n).join('、')}</span> 進行錯題分析和強化訓練。特別是針對未達預期的科目，需要仔細反省準備與應試過程中的缺失。同時，將三個面向中未勾選的「待加強」項目加入到您的下一個讀書計畫中。`
+                : `整體表現良好，實際成績皆達到或超越預期目標，可進一步挑戰自我，將錯題原因分類，提升學習深度，並主動幫忙其他同學。`;
+
+            summaryText += `<div class="mt-8 p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-lg">
+                                <h3 class="text-xl font-bold text-yellow-800 mb-2">🌟 總結與下一步行動建議：</h3>
+                                <p class="text-gray-800">${recommendation}</p>
+                            </div>`;
+
+
+            // 4. 顯示總結報告
+            document.getElementById('summary-content').innerHTML = summaryText;
+            document.getElementById('summary-section').classList.remove('hidden');
+            
+            // 顯示下載按鈕
+            document.getElementById('download-report-btn').classList.remove('hidden');
+
+            // 捲動到總結區
+            document.getElementById('summary-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        /**
+         * 將反省報告數據發送到 Firestore 數據庫【並同步發送到 Apps Script 試算表】。
+         */
+        async function saveToFirestore() {
+            // !!! 請將此處替換為您在 Apps Script 部署中取得的 Web 應用程式網址 !!!
+            const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzheAfU1ZgVvyp9BkpMHbuPvlU0gc5bLYSbx5mp0vLyJ7bkG2bDDvAUB321_hS6_xDIKA/exec';
+            // !!! -------------------------------------------------------- !!!
+
+
+            if (!db || !userId) {
+                statusDiv.innerHTML = '⚠️ 數據庫尚未連線成功，請稍候再試。';
+                statusDiv.classList.remove('text-green-600');
+                statusDiv.classList.add('text-red-500');
+                return;
+            }
+
+            statusDiv.innerHTML = '📝 正在儲存報告到數據庫...';
+            statusDiv.classList.remove('text-red-500', 'text-green-600');
+            statusDiv.classList.add('text-blue-500');
+
+            try {
+                const recordData = collectFormData();
+                
+                // --- 1. 私人儲存 (完整數據) ---
+                const privateCollectionPath = `artifacts/${appId}/users/${userId}/reflection_records`;
+                await addDoc(collection(db, privateCollectionPath), recordData);
+                
+                // --- 2. 公開儲存 (試算表摘要數據) ---
+                // 數據結構化，避免陣列和複雜巢狀
+                const scoresSummary = {};
+                subjects.forEach(subj => {
+                    scoresSummary[`${subj.name}實際`] = recordData.scores[subj.id].actual;
+                    scoresSummary[`${subj.name}預計`] = recordData.scores[subj.id].expected;
+                });
+
+                const summaryData = {
+                    timestamp: recordData.timestamp,
+                    studentName: recordData.studentName,
+                    examPeriod: recordData.examPeriod,
+                    averageActualScore: recordData.averageActualScore,
+                    ...scoresSummary, // 扁平化的分數數據
+                    lowScores: recordData.lowScores,
+                    unmetExpectations: recordData.unmetExpectations,
+                    prepSummary: recordData.prepSummary,
+                    duringSummary: recordData.duringSummary,
+                    afterSummary: recordData.afterSummary,
+                    userId: userId 
+                };
+                
+                // 使用公開集合路徑
+                const publicCollectionPath = `artifacts/${appId}/public/data/all_reflections_summary`;
+                await addDoc(collection(db, publicCollectionPath), summaryData);
+
+                
+                // --- 3. 發送數據到 Apps Script Web App (同步到 Google Sheet) ---
+                let sheetSyncSuccess = true;
+                if (APPS_SCRIPT_URL.includes('https://script.google.com/macros/')) {
+                    try {
+                        const sheetResponse = await fetch(APPS_SCRIPT_URL, {
+                            method: 'POST',
+                            mode: 'cors',
+                            cache: 'no-cache',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(recordData) // 發送完整數據，讓 Apps Script 負責攤平
+                        });
+
+                        if (!sheetResponse.ok) {
+                            const errorText = await sheetResponse.text();
+                            throw new Error(`Apps Script POST failed: ${errorText}`);
+                        }
+                    } catch (error) {
+                        sheetSyncSuccess = false;
+                        console.error('Apps Script 同步失敗:', error);
+                    }
+                } else {
+                    sheetSyncSuccess = false;
+                }
+                
+                // 根據同步結果更新狀態
+                if (sheetSyncSuccess) {
+                    statusDiv.innerHTML = '✅ 儲存成功！記錄已同步到 Google Sheet。';
+                } else if (APPS_SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL')) {
+                    statusDiv.innerHTML = '✅ 儲存成功！(請注意：Apps Script URL 尚未設置，試算表同步功能未啟用)';
+                } else {
+                     statusDiv.innerHTML = '✅ 儲存成功！但 Google Sheet 同步失敗 (詳情請看 console)。';
+                }
+
+                statusDiv.classList.remove('text-blue-500');
+                statusDiv.classList.add('text-green-600');
+            } catch (error) {
+                console.error('儲存到 Firestore 失敗:', error);
+                statusDiv.innerHTML = `❌ 儲存失敗！錯誤: ${error.message}`;
+                statusDiv.classList.remove('text-blue-500');
+                statusDiv.classList.add('text-red-500');
+            }
+        }
+        
+        /**
+         * ⚠️ 已移除： loadReflectionHistory() 
+         */
+        
+        /**
+         * 將反省報告內容轉換為純文字檔案 (.txt) 並下載。
+         */
+        function downloadReflectionReport() {
+            const summarySection = document.getElementById('summary-section');
+            const summaryContent = document.getElementById('summary-content');
+
+            if (summarySection.classList.contains('hidden') || summaryContent.innerHTML === '') {
+                console.warn('請先生成反省報告再嘗試下載！');
+                statusDiv.innerHTML = '⚠️ 請先生成反省報告再嘗試下載！';
+                statusDiv.classList.remove('text-green-600', 'text-blue-500');
+                statusDiv.classList.add('text-red-500');
+                return;
+            }
+
+            // 取得報告內容 (包含 HTML)
+            const reportHtml = summaryContent.innerHTML;
+            
+            // 創建一個臨時 div 來剝離 HTML 標籤，並進行格式化
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = reportHtml;
+
+            // 替換 HTML 結構為純文本格式，並調整格式使其更易閱讀
+            let reportText = tempDiv.textContent || tempDiv.innerText || "";
+            
+            // 進一步清理和格式化：
+            reportText = reportText.replace(/\n\s*\n/g, '\n\n'); // 移除多餘空白行
+            reportText = reportText.replace(/🎓 成績總覽：/g, '=========================================\n\n🎓 成績總覽：\n');
+            reportText = reportText.replace(/💡 考前準備反思/g, '\n=========================================\n💡 考前準備反思');
+            reportText = reportText.replace(/⏱️ 考試臨場表現/g, '\n=========================================\n⏱️ 考試臨場表現');
+            reportText = reportText.replace(/🎯 考後成長規劃/g, '\n=========================================\n🎯 考後成長規劃');
+            reportText = reportText.replace(/🌟 總結與下一步行動建議：/g, '\n\n=========================================\n🌟 總結與下一步行動建議：\n');
+            reportText = reportText.replace(/\(已做到\)/g, ' [已做到]');
+            reportText = reportText.replace(/\(待加強\)/g, ' [待加強]');
+            reportText = reportText.replace(/\(將執行\)/g, ' [將執行]');
+            reportText = reportText.replace(/🏆/g, ' [表現優異]');
+            reportText = reportText.replace(/❗/g, ' [未達目標]');
+            
+            // 獲取文件名
+            const studentName = document.getElementById('student-name').value.trim() || '學生';
+            const examPeriod = document.getElementById('exam-period').value || '考試反省';
+            const filename = `${studentName}_${examPeriod}_反省報告.txt`;
+
+            // 創建 Blob 和下載連結
+            const blob = new Blob([reportText], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            
+            // 模擬點擊下載
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // 清理 URL
+            URL.revokeObjectURL(url);
+            
+            statusDiv.innerHTML = `🎉 報告已成功下載為 ${filename}。`;
+            statusDiv.classList.remove('text-red-500', 'text-blue-500');
+            statusDiv.classList.add('text-green-600');
+        }
+
+        /**
+         * ⚠️ 已移除： exportAllRecordsToCsv()
+         */
+
+
+        // 將重要函數暴露給 HTML 的 onclick 事件
+        window.generateReflection = generateReflection;
+        window.saveToFirestore = saveToFirestore;
+        window.downloadReflectionReport = downloadReflectionReport;
+    </script>
+</body>
+</html>
