@@ -207,7 +207,6 @@
                         <input id="during-8" type="checkbox" name="during" value="在試卷上做了記號，標註不確定的題目待會檢查" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
                         <label for="during-8" class="ml-3 text-gray-700">8. 我在試卷上做了記號，標註不確定的題目待會檢查。</label>
                     </div>
-                    <!-- 原 12, 13, 14, 15 -->
                     <div class="flex items-start">
                         <input id="during-9" type="checkbox" name="during" value="我的專注力能持續到考試結束，沒有中途走神" class="h-5 w-5 text-yellow-600 rounded border-gray-300 focus:ring-yellow-500 mt-1">
                         <label for="during-9" class="ml-3 text-gray-700">9. 我的專注力能持續到考試結束，沒有中途走神。</label>
@@ -299,14 +298,12 @@
             </div>
         </section>
         
-        <!-- 歷史記錄區 (已移除) -->
-
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { initializeApp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
         
         // --- 全局狀態與常數 ---
         let db;
@@ -335,7 +332,9 @@
         // --- Firebase 初始化與登入 ---
         async function setupFirebase() {
             try {
-                // setLogLevel('debug'); // 開啟 Firebase 除錯日誌
+                // 啟用 Firebase 除錯日誌，幫助診斷問題
+                setLogLevel('debug'); 
+                
                 const app = initializeApp(firebaseConfig);
                 auth = getAuth(app);
                 db = getFirestore(app);
@@ -352,7 +351,7 @@
                 statusDiv.classList.add('text-green-600');
 
             } catch (error) {
-                console.error("Firebase 初始化失敗:", error);
+                console.error("Firebase 初始化失敗 (關鍵錯誤):", error);
                 statusDiv.innerHTML = '❌ 數據庫連線失敗！請檢查配置。';
                 statusDiv.classList.remove('text-green-600');
                 statusDiv.classList.add('text-red-500');
@@ -444,7 +443,7 @@
             const duringCheckedList = data.duringCheckedList;
             const afterCheckedList = data.afterCheckedList;
 
-            // 總成績區塊：顯示實際與預計分數 (已修改為包含顏色和表情符號)
+            // 總成績區塊：顯示實際與預計分數 (包含顏色和表情符號)
             const scoresHtml = subjects.map(subject => {
                 const actual = data.scores[subject.id].actual;
                 const expected = data.scores[subject.id].expected;
@@ -556,7 +555,7 @@
          */
         async function saveToFirestore() {
             // !!! 請將此處替換為您在 Apps Script 部署中取得的 Web 應用程式網址 !!!
-            const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzheAfU1ZgVvyp9BkpMHbuPvlU0gc5bLYSbx5mp0vLyJ7bkG2bDDvAUB321_hS6_xDIKA/exec';
+            const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxJOpK3VoaA0nVl2kYXW-k0EaKGW90tjGT2nKJ7micF9IdijW8W8yRR69H81cklK8Y9ig/exec';
             // !!! -------------------------------------------------------- !!!
 
 
@@ -579,7 +578,6 @@
                 await addDoc(collection(db, privateCollectionPath), recordData);
                 
                 // --- 2. 公開儲存 (試算表摘要數據) ---
-                // 數據結構化，避免陣列和複雜巢狀
                 const scoresSummary = {};
                 subjects.forEach(subj => {
                     scoresSummary[`${subj.name}實際`] = recordData.scores[subj.id].actual;
@@ -591,7 +589,7 @@
                     studentName: recordData.studentName,
                     examPeriod: recordData.examPeriod,
                     averageActualScore: recordData.averageActualScore,
-                    ...scoresSummary, // 扁平化的分數數據
+                    ...scoresSummary, 
                     lowScores: recordData.lowScores,
                     unmetExpectations: recordData.unmetExpectations,
                     prepSummary: recordData.prepSummary,
@@ -632,7 +630,7 @@
                 }
                 
                 // 根據同步結果更新狀態
-                if (sheetSyncSuccess) {
+                if (sheetSyncSuccess && APPS_SCRIPT_URL.includes('https://script.google.com/macros/')) {
                     statusDiv.innerHTML = '✅ 儲存成功！記錄已同步到 Google Sheet。';
                 } else if (APPS_SCRIPT_URL.includes('YOUR_APPS_SCRIPT_WEB_APP_URL')) {
                     statusDiv.innerHTML = '✅ 儲存成功！(請注意：Apps Script URL 尚未設置，試算表同步功能未啟用)';
@@ -649,10 +647,6 @@
                 statusDiv.classList.add('text-red-500');
             }
         }
-        
-        /**
-         * ⚠️ 已移除： loadReflectionHistory() 
-         */
         
         /**
          * 將反省報告內容轉換為純文字檔案 (.txt) 並下載。
@@ -717,10 +711,6 @@
             statusDiv.classList.remove('text-red-500', 'text-blue-500');
             statusDiv.classList.add('text-green-600');
         }
-
-        /**
-         * ⚠️ 已移除： exportAllRecordsToCsv()
-         */
 
 
         // 將重要函數暴露給 HTML 的 onclick 事件
